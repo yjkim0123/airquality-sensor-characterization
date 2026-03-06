@@ -1,0 +1,9 @@
+data/airquality_raw.pkl
+data/raw_stations/
+data/collection_errors.json
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.synctex.gz
