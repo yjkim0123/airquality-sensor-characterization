@@ -77,6 +77,15 @@ We identified 279~station pairs within 5~km using Haversine distance from statio
 
 Station failures were defined as continuous data gaps ${\geq}24$~hours. Mean time between failures (MTBF) was calculated per station type as total operational hours divided by failure count.
 
+\subsection{Sensor Health Index}
+
+We propose a composite Sensor Health Index (SHI) that integrates drift, noise, and data availability into a single metric for prioritizing maintenance. For each station, three normalized component scores are computed: (1)~drift score $D_s$, the absolute linear drift rate normalized to $[0, 1]$ across all stations; (2)~noise score $N_s$, the median daily CV similarly normalized; and (3)~gap score $G_s$, the fraction of missing observations. The SHI is defined as:
+\begin{equation}
+\text{SHI}_s = \frac{1}{3}(D_s + N_s + G_s)
+\label{eq:shi}
+\end{equation}
+where $\text{SHI} \in [0, 1]$ and higher values indicate poorer sensor health requiring urgent attention. Stations are classified as Good ($\text{SHI} \leq 0.2$), Fair ($0.2 < \text{SHI} \leq 0.4$), Poor ($0.4 < \text{SHI} \leq 0.6$), or Critical ($\text{SHI} > 0.6$). Equal weighting is adopted as a baseline; domain-specific weighting can be applied based on operational priorities.
+
 \section{Results}
 
 \subsection{Noise Characteristics}
@@ -177,6 +186,17 @@ MST requires explicit consideration of measurement uncertainty. We estimate the 
 
 Overall data availability is high (97.4\% for urban PM\textsubscript{2.5}), but episodic failures are common: 36.3\% of stations experienced at least one gap exceeding 24~hours for PM\textsubscript{2.5}, while 6.6\% had gaps exceeding 72~hours. The MTBF varies substantially by station type: roadside stations are most reliable (394.2~days), followed by urban (192.8~days) and port (165.7~days), while suburban stations show the shortest MTBF (65.7~days). Background island stations, despite their remoteness, achieve an MTBF of 122.6~days with only 5~failure events across 7~stations.
 
+\subsection{Sensor Health Index}
+
+Applying the proposed SHI to all 349~PM\textsubscript{2.5} stations (figure~\ref{fig:shi}) reveals that 78.5\% of stations are classified as Good (SHI~$\leq 0.2$), 18.1\% as Fair, 3.2\% as Poor, and 0.3\% (1~station) as Critical. The mean SHI is 0.158 (median = 0.141, SD = 0.090). The three component scores exhibit low inter-correlation (Drift--Noise: $r = 0.06$; Drift--Gap: $r = 0.27$; Noise--Gap: $r = 0.12$), confirming that the SHI captures complementary degradation modes. Suburban stations show the highest mean SHI (0.215), while roadside stations perform best (0.116), suggesting that maintenance schedules may need to account for station type.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig5_shi.pdf}
+\caption{Sensor Health Index (SHI) analysis: (a)~distribution across 349 stations; (b)~component scores showing drift vs.\ noise with SHI as color; (c)~SHI distribution by station type.}
+\label{fig:shi}
+\end{figure}
+
 \section{Discussion}
 
 Our findings have several practical implications for network operation and data quality assurance~\cite{epa2017qapp, pang2021assessing}. The high prevalence of significant drift (33.8--61.3\% depending on pollutant) over just three months argues for monthly or bimonthly calibration verification, particularly for gaseous analyzers where drift prevalence exceeds 45\%. The 23.7\% of co-located pairs with biases exceeding 5~\si{\micro\gram/\meter\cubed} suggests that spatial averaging or data fusion approaches should account for station-specific offsets~\cite{jiao2016cairsense}. The heteroscedastic noise structure implies that uncertainty quantification should be concentration-dependent rather than assuming constant measurement error~\cite{schneider2017dqa}. The negative drift bias in PM\textsubscript{2.5} stations ($-0.43$~\si{\micro\gram/\meter\cubed}/month) could lead to ${\sim}1.3$~\si{\micro\gram/\meter\cubed} underestimation after one quarter---non-negligible for regulatory compliance against Korea's annual standard of 15~\si{\micro\gram/\meter\cubed}~\cite{kme2018standard}.
@@ -187,7 +207,7 @@ Limitations include the three-month observation window, which captures a single 
 
 \section{Conclusion}
 
-This paper provides, to our knowledge, the first systematic empirical characterization of in-field sensor performance across Korea's national air quality monitoring network, revealing widespread but heterogeneous drift, concentration-dependent noise, and non-trivial inter-station biases. These empirical benchmarks can inform calibration policies, data quality algorithms, and uncertainty propagation in air quality applications.
+This paper provides, to our knowledge, the first systematic empirical characterization of in-field sensor performance across Korea's national air quality monitoring network, revealing widespread but heterogeneous drift, concentration-dependent noise, and non-trivial inter-station biases. We propose the Sensor Health Index (SHI), a composite metric integrating drift, noise, and availability that enables automated prioritization of maintenance resources. These empirical benchmarks and the SHI framework can inform calibration policies, data quality algorithms, and uncertainty propagation in air quality applications.
 
 \section*{Data Availability}
 Data used in this study were collected from the AirKorea Open API (\url{https://www.data.go.kr}) operated by the Korea Environment Corporation. The analysis code is available at \url{https://github.com/yjkim0123/airquality-sensor-characterization}.
