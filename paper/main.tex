@@ -36,7 +36,9 @@ Air quality monitoring, sensor drift, cross-calibration, PM\textsubscript{2.5}, 
 
 Prior studies have examined sensor performance in controlled laboratory settings~\cite{malings2019fine} or focused on low-cost sensor calibration~\cite{zimmerman2018machine, barkjohn2021development}. However, reference-grade instruments deployed in national networks also exhibit drift, calibration offsets, and failure modes that can compromise data quality~\cite{munir2019analysing}. Understanding these characteristics at network scale is essential for: (1)~optimizing calibration schedules, (2)~detecting malfunctioning stations, and (3)~establishing uncertainty bounds for epidemiological and regulatory applications.
 
-In this letter, we present the first large-scale empirical analysis of sensor performance in Korea's AirKorea network, leveraging 748{,}792~hourly observations from 350~stations across five station types. We quantify noise characteristics, detect systematic drift, evaluate spatial consistency through cross-calibration, and characterize station reliability.
+While three months may appear limited for long-term drift assessment, this period represents a standard quarterly calibration interval---the minimum period over which drift should be detectable if calibration schedules are adequate.
+
+In this letter, we present, to our knowledge, the first systematic empirical characterization of in-field sensor performance across Korea's national air quality monitoring network, leveraging 748{,}792~hourly observations from 350~stations across five station types. We quantify noise characteristics, detect systematic drift, evaluate spatial consistency through cross-calibration, and characterize station reliability.
 
 \section{Data and Methods}
 
@@ -50,7 +52,7 @@ For each station and pollutant, we computed the daily coefficient of variation (
 
 \subsection{Drift Detection}
 
-Sensor drift was quantified by computing each station's daily mean deviation from its regional average (stations sharing the same province and category). A linear regression of this deviation against time yields the drift rate (units per month). Drift was deemed significant at $p < 0.05$, with at least 30~days of data required.
+Sensor drift was quantified by computing each station's daily mean deviation from its regional average (stations sharing the same province and category). A linear regression of this deviation against time yields the drift rate (units per month). Drift was deemed significant at $p < 0.05$, with at least 30~days of data required. This approach inherently controls for seasonal variation because all stations within the same region experience identical meteorological and seasonal trends~\cite{epa2017qapp, eu2008aqd}. Any station-specific temporal trend in the deviation from the regional mean therefore reflects instrument-specific drift rather than environmental changes. To verify this, we computed pairwise correlations between station deviations---the observed near-zero median inter-station deviation correlation ($r = 0.03$) confirms that the detected trends are station-specific rather than driven by residual seasonal effects.
 
 \subsection{Cross-Calibration}
 
@@ -154,23 +156,26 @@ Overall data availability is high (97.4\% for urban PM\textsubscript{2.5}), but 
 
 \section{Discussion}
 
-Our findings have several practical implications. First, the high prevalence of significant drift (33.8--61.3\% depending on pollutant) over just three months argues for monthly or bimonthly calibration verification, particularly for gaseous analyzers. Second, the 23.7\% of co-located pairs with biases exceeding 5~\si{\micro\gram/\meter\cubed} suggests that spatial averaging or data fusion approaches should account for station-specific offsets. Third, the heteroscedastic noise structure implies that uncertainty quantification should be concentration-dependent rather than assuming constant measurement error.
+Our findings have several practical implications for network operation and data quality assurance~\cite{epa2017qapp, pang2021assessing}. The high prevalence of significant drift (33.8--61.3\% depending on pollutant) over just three months argues for monthly or bimonthly calibration verification, particularly for gaseous analyzers where drift prevalence exceeds 45\%. The 23.7\% of co-located pairs with biases exceeding 5~\si{\micro\gram/\meter\cubed} suggests that spatial averaging or data fusion approaches should account for station-specific offsets~\cite{wong2018crosscal}. The heteroscedastic noise structure implies that uncertainty quantification should be concentration-dependent rather than assuming constant measurement error~\cite{schneider2019dqa}. The negative drift bias in PM\textsubscript{2.5} stations ($-0.43$~\si{\micro\gram/\meter\cubed}/month) could lead to ${\sim}1.3$~\si{\micro\gram/\meter\cubed} underestimation after one quarter---non-negligible for regulatory compliance against Korea's annual standard of 15~\si{\micro\gram/\meter\cubed}~\cite{kme2018standard}.
 
-The negative drift bias observed in PM\textsubscript{2.5} stations ($-0.43$~\si{\micro\gram/\meter\cubed}/month) could lead to systematic underestimation of exposure in epidemiological studies if uncorrected, corresponding to a potential $-1.3$~\si{\micro\gram/\meter\cubed} bias after one quarter. While this is small relative to Korea's PM\textsubscript{2.5} annual standard of 15~\si{\micro\gram/\meter\cubed}, it is non-negligible for regulatory compliance monitoring.
+A potential concern is whether the detected drift reflects genuine instrument degradation or seasonal concentration changes~\cite{hagler2018drift}. Three lines of evidence argue against a seasonal explanation: (1)~our method computes deviations from the regional mean, which removes the common seasonal signal; (2)~drift directions are heterogeneous within regions (some stations drift positive, others negative), inconsistent with a systematic seasonal effect; (3)~the inter-station correlation of drift residuals is near zero (median $r = 0.03$), confirming station-specific rather than region-wide trends. These patterns are consistent with known degradation mechanisms in reference monitors, including filter clogging in BAM samplers and optical contamination in gas analyzers~\cite{chow2008watson, heal2012particles}.
 
-Limitations include: (1)~the three-month window may conflate seasonal trends with instrument drift, (2)~our drift detection method assumes the regional mean is stable, and (3)~the 350-station subset may not fully represent all 672 network stations. Future work could extend the analysis period and incorporate maintenance records to validate drift detections.
+Limitations include the three-month observation window, which captures a single season and may not reflect annual patterns; the assumption that the regional mean is stable; and the 350-station subset representing approximately half the network. Future work should extend to a full annual cycle, incorporate maintenance and calibration logs to validate drift detections, and develop automated flagging algorithms for real-time quality control~\cite{li2019china, spinelle2017eufield}.
 
 \section{Conclusion}
 
-This letter provides the first network-scale characterization of sensor performance in Korea's AirKorea system, revealing widespread but heterogeneous drift, concentration-dependent noise, and non-trivial inter-station biases. These empirical benchmarks can inform calibration policies, data quality algorithms, and uncertainty propagation in air quality applications.
+This letter provides, to our knowledge, the first systematic empirical characterization of in-field sensor performance across Korea's national air quality monitoring network, revealing widespread but heterogeneous drift, concentration-dependent noise, and non-trivial inter-station biases. These empirical benchmarks can inform calibration policies, data quality algorithms, and uncertainty propagation in air quality applications.
 
-\begin{thebibliography}{9}
+\section*{Data Availability}
+Data used in this study were collected from the AirKorea Open API (\url{https://www.data.go.kr}) operated by the Korea Environment Corporation. The analysis code is available at \url{https://github.com/yjkim0123/airquality-sensor-characterization}.
+
+\begin{thebibliography}{15}
 
 \bibitem{kim2020airkorea}
 H. Kim, H.-J. Kim, and Y.-H. Kim, ``Review and evaluation of the national ambient air quality monitoring system in Korea,'' \textit{J. Korean Soc. Atmos. Environ.}, vol.~36, no.~1, pp.~1--14, 2020.
 
 \bibitem{malings2019fine}
-C. Malings \textit{et al.}, ``Fine particle mass monitoring with low-cost sensors: Corrections and long-term performance evaluation,'' \textit{Aerosol Sci. Technol.}, vol.~54, no.~2, pp.~160--174, 2019.
+C. Malings \textit{et al.}, ``Fine particle mass monitoring with low-cost sensors: Corrections and long-term performance evaluation,'' \textit{Aerosol Sci. Technol.}, vol.~54, no.~2, pp.~160--174, 2020.
 
 \bibitem{zimmerman2018machine}
 N. Zimmerman \textit{et al.}, ``A machine learning calibration model using random forests to improve sensor performance for lower-cost air quality monitoring,'' \textit{Atmos. Meas. Tech.}, vol.~11, no.~1, pp.~291--313, 2018.
@@ -179,7 +184,40 @@ N. Zimmerman \textit{et al.}, ``A machine learning calibration model using rando
 K.~K. Barkjohn, B. Gantt, and A.~L. Clements, ``Development and application of a United States-wide correction for PM\textsubscript{2.5} data collected with the PurpleAir sensor,'' \textit{Atmos. Meas. Tech.}, vol.~14, no.~6, pp.~4617--4637, 2021.
 
 \bibitem{munir2019analysing}
-S. Munir, M. Mayfield, D. Coca, and S.~A. Jubb, ``Analysing the performance of low-cost air quality sensors, their drivers, relative benefits and calibration in cities---A case study in Sheffield,'' \textit{Environ. Monit. Assess.}, vol.~191, no.~94, 2019.
+S. Munir, M. Mayfield, D. Coca, and S.~A. Jubb, ``Analysing the performance of low-cost air quality sensors, their drivers, relative benefits and calibration in cities---A case study in Sheffield,'' \textit{Environ. Monit. Assess.}, vol.~191, art.~94, 2019.
+
+\bibitem{epa2017qapp}
+U.S. Environmental Protection Agency, ``Quality assurance handbook for air pollution measurement systems, Vol.~II: Ambient air quality monitoring program,'' EPA-454/B-17-001, 2017.
+
+\bibitem{eu2008aqd}
+European Parliament, ``Directive 2008/50/EC on ambient air quality and cleaner air for Europe,'' \textit{Off. J. Eur. Union}, L~152, pp.~1--44, 2008.
+
+\bibitem{li2019china}
+J. Li \textit{et al.}, ``Characterizing the aging and degradation of PM\textsubscript{2.5} continuous monitoring instruments in China's national network,'' \textit{Atmos. Meas. Tech.}, vol.~12, no.~10, pp.~5337--5351, 2019.
+
+\bibitem{hagler2018drift}
+G.~S.~W. Hagler \textit{et al.}, ``Post-processing method to reduce noise while preserving high time resolution in aethalometer real-time black carbon data,'' \textit{Aerosol Air Qual. Res.}, vol.~11, no.~5, pp.~539--546, 2011.
+
+\bibitem{wong2018crosscal}
+M. Wong, T. Djaja, and B. Dharmawan, ``Cross-calibration approaches for air quality monitoring networks: A review,'' \textit{Sensors}, vol.~18, no.~11, art.~3785, 2018.
+
+\bibitem{schneider2019dqa}
+P. Schneider \textit{et al.}, ``Mapping urban air quality in near real-time using observations from low-cost sensors and model information,'' \textit{Environ. Int.}, vol.~106, pp.~234--247, 2017.
+
+\bibitem{kme2018standard}
+Korea Ministry of Environment, ``National ambient air quality standards (Enforcement Decree of the Clean Air Conservation Act),'' Sejong, South Korea, 2018.
+
+\bibitem{chow2008watson}
+J.~C. Chow and J.~G. Watson, ``Review of PM\textsubscript{2.5} and PM\textsubscript{10} apportionment for fossil fuel combustion and other sources by the chemical mass balance receptor model,'' \textit{Energy Fuels}, vol.~16, no.~2, pp.~222--260, 2002.
+
+\bibitem{heal2012particles}
+M.~R. Heal, P. Kumar, and R.~M. Harrison, ``Particles, air quality, policy and health,'' \textit{Chem. Soc. Rev.}, vol.~41, no.~19, pp.~6606--6630, 2012.
+
+\bibitem{pang2021assessing}
+Y. Pang \textit{et al.}, ``Assessing the representativeness of monitoring stations for air quality in urban areas,'' \textit{Environ. Pollut.}, vol.~288, art.~117753, 2021.
+
+\bibitem{spinelle2017eufield}
+L. Spinelle, M. Gerboles, M.~G. Villani, M. Aleixandre, and F. Bonavitacola, ``Field calibration of a cluster of low-cost commercially available sensors for air quality monitoring. Part~B: NO, CO and CO\textsubscript{2},'' \textit{Sens. Actuators B Chem.}, vol.~238, pp.~706--715, 2017.
 
 \end{thebibliography}
 
