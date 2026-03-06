@@ -33,13 +33,12 @@
 \maketitle
 
 \begin{abstract}
-We present a comprehensive empirical characterization of sensor performance across 350~stations in Korea's national air quality monitoring network (AirKorea), analyzing 748{,}792 hourly measurements of six pollutants over a three-month period (December 2025--March 2026). Our analysis reveals significant sensor drift in 33.8\% of PM\textsubscript{2.5} stations and up to 61.3\% of SO\textsubscript{2} stations (linear trend $p < 0.05$), with drift rates varying substantially across pollutant types. Spatial cross-calibration of 279~adjacent station pairs (${<}5$~km) yields a median Pearson correlation of 0.936 for PM\textsubscript{2.5}, but 23.7\% of pairs exhibit systematic biases exceeding \SI{5}{\micro\gram/\meter\cubed}. We also document pronounced heteroscedastic noise characteristics: daily coefficient of variation (CV) ranges from 0.115 (SO\textsubscript{2}) to 0.365 (NO\textsubscript{2}/O\textsubscript{3}), with CV inversely related to concentration level. Station failure analysis reveals 36.3\% of stations experienced data gaps exceeding 24~hours, with mean time between failures of 192.8~days for urban stations. These findings provide actionable benchmarks for calibration scheduling, quality control, and sensor network design.
+We present a comprehensive empirical characterization of sensor performance across 350~stations in Korea's national air quality monitoring network (AirKorea), analyzing 748{,}792 hourly measurements of six pollutants over a three-month period (December 2025--March 2026). Our analysis reveals significant sensor drift in 33.8\% of PM\textsubscript{2.5} stations and up to 61.3\% of SO\textsubscript{2} stations (linear trend $p < 0.05$), with drift rates varying substantially across pollutant types. Spatial cross-calibration of 279~adjacent station pairs (${<}5$~km) yields a median Pearson correlation of 0.936 for PM\textsubscript{2.5}, but 23.7\% of pairs exhibit systematic biases exceeding \SI{5}{\micro\gram/\meter\cubed}. We also document pronounced heteroscedastic noise characteristics: daily coefficient of variation (CV) ranges from 0.115 (SO\textsubscript{2}) to 0.365 (NO\textsubscript{2}/O\textsubscript{3}), with CV inversely related to concentration level. Station failure analysis reveals 36.3\% of stations experienced data gaps exceeding 24~hours, with mean time between failures of 192.8~days for urban stations. These findings provide actionable benchmarks for calibration scheduling, quality control, and sensor network design. We propose a Sensor Health Index (SHI) that integrates drift, noise, and data availability into a single composite metric for prioritizing station maintenance.
 \end{abstract}
 
 \noindent\textbf{Keywords:} Air quality monitoring, sensor drift, cross-calibration, PM\textsubscript{2.5}, network characterization
 
-\vspace{1em}
-\noindent\textit{Submitted to Measurement Science and Technology as a Technical Design Note.}
+
 
 \section{Introduction}
 
@@ -48,6 +47,8 @@ Air quality monitoring networks are critical infrastructure for public health pr
 Prior studies have examined sensor performance in controlled laboratory settings~\cite{malings2020fine} or focused on low-cost sensor calibration~\cite{zimmerman2018machine, barkjohn2021development}. However, reference-grade instruments deployed in national networks also exhibit drift, calibration offsets, and failure modes that can compromise data quality~\cite{munir2019analysing}. Understanding these characteristics at network scale is essential for: (1)~optimizing calibration schedules, (2)~detecting malfunctioning stations, and (3)~establishing uncertainty bounds for epidemiological and regulatory applications.
 
 While three months may appear limited for long-term drift assessment, this period represents a standard quarterly calibration interval---the minimum period over which drift should be detectable if calibration schedules are adequate.
+
+Despite the importance of holistic sensor performance assessment, no standardized composite metric exists for integrating multiple degradation indicators into actionable maintenance priorities.
 
 In this paper, we present, to our knowledge, the first systematic empirical characterization of in-field sensor performance across Korea's national air quality monitoring network, leveraging 748{,}792~hourly observations from 350~stations across five station types. We quantify noise characteristics, detect systematic drift, evaluate spatial consistency through cross-calibration, and characterize station reliability.
 
@@ -126,8 +127,6 @@ All six pollutants exhibit pronounced heteroscedasticity (figure~\ref{fig:noise}
 \label{fig:noise}
 \end{figure}
 
-The PM\textsubscript{2.5}/PM\textsubscript{10} ratio across the network averaged 0.585 (station-level CV median = 0.363), consistent with East Asian winter conditions dominated by secondary aerosol and transboundary transport.
-
 \subsection{Sensor Drift}
 
 Table~\ref{tab:drift} presents the drift analysis results. The fraction of stations exhibiting statistically significant drift ($p < 0.05$) varies from 25.3\% (PM\textsubscript{10}) to 61.3\% (SO\textsubscript{2}). Gaseous pollutants (SO\textsubscript{2}, CO, O\textsubscript{3}) show higher drift prevalence than particulate matter, which is consistent with the known sensitivity of electrochemical and optical gas analyzers to environmental conditions and reagent degradation.
@@ -152,7 +151,7 @@ O\textsubscript{3}    & 44.8\% & 0.71$\times 10^{-3}$ & 1.29$\times 10^{-3}$ ppm
 
 For PM\textsubscript{2.5}, the median drift rate among significantly drifting stations is $-0.43$~\si{\micro\gram/\meter\cubed}/month, suggesting a systematic negative bias that accumulates over time. Figure~\ref{fig:drift}a illustrates a representative drifting station where the 7-day rolling deviation from the regional mean shows a clear downward trend.
 
-CUSUM analysis provides a complementary perspective: 72.2\% of PM\textsubscript{2.5} stations triggered a CUSUM alarm ($h = 10\hat{\sigma}$), substantially more than the 33.8\% identified by linear regression. This discrepancy arises because CUSUM detects \emph{transient} shifts that do not manifest as significant linear trends over the full period. Critically, CUSUM identifies \emph{when} drift begins: the median alarm occurs at day~18, indicating that most detectable drift emerges within the first three weeks---well within a standard quarterly calibration interval (figure~\ref{fig:drift}b).
+CUSUM analysis provides a complementary perspective: 72.2\% of PM\textsubscript{2.5} stations triggered a CUSUM alarm ($h = 10\hat{\sigma}$), substantially more than the 33.8\% identified by linear regression. This discrepancy arises because CUSUM detects \emph{transient} shifts that do not manifest as significant linear trends over the full period. Critically, CUSUM identifies \emph{when} drift begins: the median alarm occurs at day~18, indicating that most detectable drift emerges within the first three weeks---well within a standard quarterly calibration interval.
 
 \begin{figure}[!t]
 \centering
@@ -174,17 +173,17 @@ Among 279~co-located station pairs within 5~km, the median PM\textsubscript{2.5}
 
 However, the median RMSE of 6.94~\si{\micro\gram/\meter\cubed} and the finding that 23.7\% of pairs exhibit systematic biases ${>}5$~\si{\micro\gram/\meter\cubed} reveal non-trivial inter-station discrepancies.
 
-Reference-based calibration using seven island background stations showed weaker correlations with urban stations (median $r = 0.682$), attributable to genuine spatial concentration gradients. The median urban-minus-reference bias of 1.50~\si{\micro\gram/\meter\cubed} quantifies the expected urban enhancement for PM\textsubscript{2.5} in winter.
+Comparison with seven island background stations yields weaker correlations (median $r = 0.682$) due to spatial concentration gradients, with a median urban enhancement of 1.50~\si{\micro\gram/\meter\cubed}.
 
-Temporal stability analysis of the 50 highest-correlation pairs found that 26.0\% exhibit statistically significant trends in their inter-station bias ($p < 0.05$), with a median weekly bias standard deviation of 1.51~\si{\micro\gram/\meter\cubed}. This indicates that even well-correlated adjacent stations develop diverging calibration states over a three-month period.
+Among the 50 highest-correlation pairs, 26.0\% exhibit significant trends in inter-station bias ($p < 0.05$), indicating that even well-correlated stations develop diverging calibration states over three months.
 
 \subsection{Measurement Uncertainty}
 
-MST requires explicit consideration of measurement uncertainty. We estimate the single-station PM\textsubscript{2.5} measurement uncertainty from co-located station pairs, following the approach of dividing pair-wise RMSE by $\sqrt{2}$ under the assumption that both stations have comparable measurement precision. From 279~pairs within 5~km, the median RMSE is \SI{6.94}{\micro\gram/\meter\cubed}, yielding a single-station uncertainty of $\pm$\SI{4.9}{\micro\gram/\meter\cubed} (median). This uncertainty is concentration-dependent: at low concentrations (${\sim}4$~\si{\micro\gram/\meter\cubed}), the coefficient of variation (CV) reaches 0.379 (uncertainty ${\sim}\pm$\SI{1.6}{\micro\gram/\meter\cubed}), decreasing to CV~$=$~0.035 at moderate levels (${\sim}15$~\si{\micro\gram/\meter\cubed}; uncertainty ${\sim}\pm$\SI{0.5}{\micro\gram/\meter\cubed}), and increasing again at high concentrations (${\sim}57$~\si{\micro\gram/\meter\cubed}; CV~$=$~0.258, uncertainty ${\sim}\pm$\SI{14.8}{\micro\gram/\meter\cubed}). The inter-quartile range of pair-wise RMSE [\num{5.42}, \num{8.79}]~\si{\micro\gram/\meter\cubed} indicates substantial variability in precision across the network. These estimates include both genuine micro-scale spatial variability and instrument measurement error, and thus represent an upper bound on instrument uncertainty alone.
+We estimate single-station PM\textsubscript{2.5} uncertainty by dividing pair-wise RMSE by $\sqrt{2}$, yielding $\pm$\SI{4.9}{\micro\gram/\meter\cubed} (median). This uncertainty is concentration-dependent: CV reaches 0.379 at low concentrations (${\sim}4$~\si{\micro\gram/\meter\cubed}), drops to 0.035 at moderate levels (${\sim}15$~\si{\micro\gram/\meter\cubed}), and rises to 0.258 at high levels (${\sim}57$~\si{\micro\gram/\meter\cubed}). The IQR of pair-wise RMSE [\num{5.42}, \num{8.79}]~\si{\micro\gram/\meter\cubed} indicates substantial precision variability. These estimates represent an upper bound on instrument uncertainty as they include micro-scale spatial variability.
 
 \subsection{Station Reliability}
 
-Overall data availability is high (97.4\% for urban PM\textsubscript{2.5}), but episodic failures are common: 36.3\% of stations experienced at least one gap exceeding 24~hours for PM\textsubscript{2.5}, while 6.6\% had gaps exceeding 72~hours. The MTBF varies substantially by station type: roadside stations are most reliable (394.2~days), followed by urban (192.8~days) and port (165.7~days), while suburban stations show the shortest MTBF (65.7~days). Background island stations, despite their remoteness, achieve an MTBF of 122.6~days with only 5~failure events across 7~stations.
+Overall data availability is high (97.4\% for urban PM\textsubscript{2.5}), but 36.3\% of stations experienced gaps exceeding 24~hours. MTBF varies by station type: roadside (394.2~days), urban (192.8~days), port (165.7~days), and suburban (65.7~days).
 
 \subsection{Sensor Health Index}
 
@@ -199,15 +198,15 @@ Applying the proposed SHI to all 349~PM\textsubscript{2.5} stations (figure~\ref
 
 \section{Discussion}
 
-Our findings have several practical implications for network operation and data quality assurance~\cite{epa2017qapp, pang2021assessing}. The high prevalence of significant drift (33.8--61.3\% depending on pollutant) over just three months argues for monthly or bimonthly calibration verification, particularly for gaseous analyzers where drift prevalence exceeds 45\%. The 23.7\% of co-located pairs with biases exceeding 5~\si{\micro\gram/\meter\cubed} suggests that spatial averaging or data fusion approaches should account for station-specific offsets~\cite{jiao2016cairsense}. The heteroscedastic noise structure implies that uncertainty quantification should be concentration-dependent rather than assuming constant measurement error~\cite{schneider2017dqa}. The negative drift bias in PM\textsubscript{2.5} stations ($-0.43$~\si{\micro\gram/\meter\cubed}/month) could lead to ${\sim}1.3$~\si{\micro\gram/\meter\cubed} underestimation after one quarter---non-negligible for regulatory compliance against Korea's annual standard of 15~\si{\micro\gram/\meter\cubed}~\cite{kme2018standard}.
+These findings have practical implications for network operation~\cite{epa2017qapp, duyzer2015representativeness}. Drift prevalence of 33.8--61.3\% over three months argues for monthly calibration verification, especially for gaseous analyzers ($>$45\% drift). The 23.7\% of pairs with biases ${>}5$~\si{\micro\gram/\meter\cubed} implies that data fusion should account for station-specific offsets~\cite{jiao2016cairsense}, and heteroscedastic noise requires concentration-dependent uncertainty quantification~\cite{schneider2017dqa}. The negative PM\textsubscript{2.5} drift ($-0.43$~\si{\micro\gram/\meter\cubed}/month) could yield ${\sim}1.3$~\si{\micro\gram/\meter\cubed} underestimation per quarter---non-negligible against Korea's 15~\si{\micro\gram/\meter\cubed} annual standard~\cite{kme2018standard}.
 
-A potential concern is whether the detected drift reflects genuine instrument degradation or seasonal concentration changes~\cite{miskell2018drift}. Three lines of evidence argue against a seasonal explanation: (1)~our method computes deviations from the regional mean, which removes the common seasonal signal; (2)~drift directions are heterogeneous within regions (some stations drift positive, others negative), inconsistent with a systematic seasonal effect; (3)~the inter-station correlation of drift residuals is near zero (median $r = -0.04$), confirming station-specific rather than region-wide trends. These patterns are consistent with known degradation mechanisms in reference monitors, including filter clogging in BAM samplers and optical contamination in gas analyzers~\cite{chow2002watson, heal2012particles}.
+A potential concern is whether detected drift reflects instrument degradation or seasonal changes~\cite{miskell2018drift}. Three lines of evidence argue against a seasonal explanation: (1)~deviations from the regional mean remove the common seasonal signal; (2)~drift directions are heterogeneous within regions, inconsistent with systematic seasonal effects; (3)~inter-station drift residual correlation is near zero (median $r = -0.04$), confirming station-specific trends. These patterns are consistent with known degradation mechanisms in reference monitors, including filter clogging in BAM samplers and optical contamination in gas analyzers~\cite{shukla2022bam, heal2012particles}.
 
-Limitations include the three-month observation window, which captures a single season and may not reflect annual patterns; the assumption that the regional mean is stable; and the 350-station subset representing approximately half the network. Future work should extend to a full annual cycle, incorporate maintenance and calibration logs to validate drift detections, and develop automated flagging algorithms for real-time quality control~\cite{bai2020china, spinelle2017eufield}.
+Limitations include the three-month observation window, which captures a single season and may not reflect annual patterns; the assumption that the regional mean is stable; and the 350-station subset representing approximately half the network. The proposed SHI uses equal component weighting as a baseline; optimal weighting should be determined through validation against maintenance records and expert assessment, which were unavailable for this study. Future work should extend to a full annual cycle, incorporate maintenance logs to validate drift detections, and develop automated flagging for real-time quality control~\cite{bai2020china, spinelle2017eufield}.
 
 \section{Conclusion}
 
-This paper provides, to our knowledge, the first systematic empirical characterization of in-field sensor performance across Korea's national air quality monitoring network, revealing widespread but heterogeneous drift, concentration-dependent noise, and non-trivial inter-station biases. We propose the Sensor Health Index (SHI), a composite metric integrating drift, noise, and availability that enables automated prioritization of maintenance resources. These empirical benchmarks and the SHI framework can inform calibration policies, data quality algorithms, and uncertainty propagation in air quality applications.
+This paper provides the first systematic empirical characterization of in-field sensor performance across Korea's national air quality monitoring network, revealing widespread but heterogeneous drift, concentration-dependent noise, and non-trivial inter-station biases. We propose the Sensor Health Index (SHI), a composite metric integrating drift, noise, and availability that enables automated prioritization of maintenance resources. These empirical benchmarks and the SHI framework can inform calibration policies, data quality algorithms, and uncertainty propagation in air quality applications.
 
 \section*{Data Availability}
 Data used in this study were collected from the AirKorea Open API (\url{https://www.data.go.kr}) operated by the Korea Environment Corporation. The analysis code is available at \url{https://github.com/yjkim0123/airquality-sensor-characterization}.
@@ -250,14 +249,14 @@ Schneider P \textit{et al} 2017 Mapping urban air quality in near real-time usin
 \bibitem{kme2018standard}
 Korea Ministry of Environment 2018 National ambient air quality standards (Enforcement Decree of the Clean Air Conservation Act) (Sejong, South Korea)
 
-\bibitem{chow2002watson}
-Chow J C and Watson J G 2002 Review of PM\textsubscript{2.5} and PM\textsubscript{10} apportionment for fossil fuel combustion and other sources by the chemical mass balance receptor model \textit{Energy Fuels} \textbf{16} 222--260
+\bibitem{shukla2022bam}
+Shukla K and Aggarwal S G 2022 A technical overview on beta-attenuation method for the monitoring of particulate matter in ambient air \textit{Aerosol Air Qual. Res.} \textbf{22} 220195
 
 \bibitem{heal2012particles}
 Heal M R, Kumar P and Harrison R M 2012 Particles, air quality, policy and health \textit{Chem. Soc. Rev.} \textbf{41} 6606--6630
 
-\bibitem{pang2021assessing}
-Pang Y \textit{et al} 2021 Assessing the representativeness of monitoring stations for air quality in urban areas \textit{Environ. Pollut.} \textbf{288} 117753
+\bibitem{duyzer2015representativeness}
+Duyzer J, van den Hout D, Zandveld P and van Ratingen S 2015 Representativeness of air quality monitoring networks \textit{Atmos. Environ.} \textbf{104} 88--101
 
 \bibitem{spinelle2017eufield}
 Spinelle L, Gerboles M, Villani M G, Aleixandre M and Bonavitacola F 2017 Field calibration of a cluster of low-cost commercially available sensors for air quality monitoring. Part~B: NO, CO and CO\textsubscript{2} \textit{Sens. Actuators B Chem.} \textbf{238} 706--715
