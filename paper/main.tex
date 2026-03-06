@@ -54,7 +54,9 @@ For each station and pollutant, we computed the daily coefficient of variation (
 
 \subsection{Drift Detection}
 
-Sensor drift was quantified by computing each station's daily mean deviation from its regional average (stations sharing the same province and category). A linear regression of this deviation against time yields the drift rate (units per month). Drift was deemed significant at $p < 0.05$, with at least 30~days of data required. This approach inherently controls for seasonal variation because all stations within the same region experience identical meteorological and seasonal trends~\cite{epa2017qapp, eu2008aqd}. Any station-specific temporal trend in the deviation from the regional mean therefore reflects instrument-specific drift rather than environmental changes. To verify this, we computed pairwise correlations between station deviations---the observed near-zero median inter-station deviation correlation ($r = 0.03$) confirms that the detected trends are station-specific rather than driven by residual seasonal effects.
+Sensor drift was quantified using two complementary methods. First, each station's daily mean deviation from its regional average (same province and category) was computed, and a linear regression against time yielded the drift rate; significance was assessed at $p < 0.05$ with ${\geq}30$~days required. This approach inherently controls for seasonal variation because co-regional stations share identical meteorological trends~\cite{epa2017qapp, eu2008aqd}; the near-zero inter-station deviation correlation ($r = 0.03$) confirms station-specific rather than seasonal effects.
+
+Second, we applied the Cumulative Sum (CUSUM) algorithm~\cite{page1954cusum} to the deviation time series to detect the \emph{onset} of drift. The one-sided CUSUM statistics $S_i^+ = \max(0, S_{i-1}^+ + z_i - k)$ and $S_i^- = \max(0, S_{i-1}^- - z_i - k)$ were computed with allowance $k = 0.5\hat{\sigma}$ and decision interval $h = 10\hat{\sigma}$, where $z_i$ is the daily deviation and $\hat{\sigma}$ is its standard deviation. An alarm is triggered when $S_i^+$ or $S_i^-$ exceeds $h$, identifying the day drift becomes statistically detectable.
 
 \subsection{Cross-Calibration}
 
@@ -129,6 +131,8 @@ O\textsubscript{3}    & 44.8\% & 0.71$\times 10^{-3}$ & 1.29$\times 10^{-3}$ ppm
 \end{table}
 
 For PM\textsubscript{2.5}, the median drift rate among significantly drifting stations is $-0.43$~\si{\micro\gram/\meter\cubed}/month, suggesting a systematic negative bias that accumulates over time. Fig.~\ref{fig:drift}a illustrates a representative drifting station where the 7-day rolling deviation from the regional mean shows a clear downward trend.
+
+CUSUM analysis provides a complementary perspective: 72.2\% of PM\textsubscript{2.5} stations triggered a CUSUM alarm ($h = 10\hat{\sigma}$), substantially more than the 33.8\% identified by linear regression. This discrepancy arises because CUSUM detects \emph{transient} shifts that do not manifest as significant linear trends over the full period. Critically, CUSUM identifies \emph{when} drift begins: the median alarm occurs at day~18, indicating that most detectable drift emerges within the first three weeks---well within a standard quarterly calibration interval (Fig.~\ref{fig:drift}b).
 
 \begin{figure}[!t]
 \centering
@@ -220,6 +224,9 @@ Y. Pang \textit{et al.}, ``Assessing the representativeness of monitoring statio
 
 \bibitem{spinelle2017eufield}
 L. Spinelle, M. Gerboles, M.~G. Villani, M. Aleixandre, and F. Bonavitacola, ``Field calibration of a cluster of low-cost commercially available sensors for air quality monitoring. Part~B: NO, CO and CO\textsubscript{2},'' \textit{Sens. Actuators B Chem.}, vol.~238, pp.~706--715, 2017.
+
+\bibitem{page1954cusum}
+E.~S. Page, ``Continuous inspection schemes,'' \textit{Biometrika}, vol.~41, no.~1/2, pp.~100--115, 1954.
 
 \end{thebibliography}
 

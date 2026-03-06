@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2026.2.5)  6 MAR 2026 17:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2026.2.5)  6 MAR 2026 17:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -422,40 +422,40 @@ ocal/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
 ]
-<figures/fig1_stations_availability.pdf, id=16, 489.18283pt x 199.76329pt>
+<figures/fig1_stations_availability.pdf, id=19, 489.18283pt x 199.76329pt>
 File: figures/fig1_stations_availability.pdf Graphic file (type pdf)
 <use figures/fig1_stations_availability.pdf>
 Package pdftex.def Info: figures/fig1_stations_availability.pdf  used on input 
-line 93.
+line 95.
 (pdftex.def)             Requested size: 252.0pt x 102.90819pt.
-<figures/fig2_noise_analysis.pdf, id=17, 514.73744pt x 177.95421pt>
+<figures/fig2_noise_analysis.pdf, id=20, 514.73744pt x 177.95421pt>
 File: figures/fig2_noise_analysis.pdf Graphic file (type pdf)
 <use figures/fig2_noise_analysis.pdf>
 Package pdftex.def Info: figures/fig2_noise_analysis.pdf  used on input line 10
-2.
+4.
 (pdftex.def)             Requested size: 252.0pt x 87.11957pt.
 
 
-<figures/fig3_drift_analysis.pdf, id=18, 514.6659pt x 177.90402pt>
+<figures/fig3_drift_analysis.pdf, id=21, 514.6659pt x 177.90402pt>
 File: figures/fig3_drift_analysis.pdf Graphic file (type pdf)
 <use figures/fig3_drift_analysis.pdf>
 Package pdftex.def Info: figures/fig3_drift_analysis.pdf  used on input line 13
-5.
+9.
 (pdftex.def)             Requested size: 252.0pt x 87.10857pt.
-<figures/fig4_cross_calibration.pdf, id=19, 514.72238pt x 177.95421pt>
+<figures/fig4_cross_calibration.pdf, id=22, 514.72238pt x 177.95421pt>
 File: figures/fig4_cross_calibration.pdf Graphic file (type pdf)
 <use figures/fig4_cross_calibration.pdf>
 Package pdftex.def Info: figures/fig4_cross_calibration.pdf  used on input line
- 146.
+ 150.
 (pdftex.def)             Requested size: 252.0pt x 87.12228pt.
 
 
 [2 <./figures/fig1_stations_availability.pdf> <./figures/fig2_noise_analysis.pd
-f> <./figures/fig3_drift_analysis.pdf>]
+f>]
 
 
 
-[3 <./figures/fig4_cross_calibration.pdf>]
+[3 <./figures/fig3_drift_analysis.pdf> <./figures/fig4_cross_calibration.pdf>]
 
 
 
@@ -468,32 +468,34 @@ L3 programming layer <2025-01-18>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 8767 strings out of 473190
- 197599 string characters out of 5715801
- 576356 words of memory out of 5000000
- 31932 multiletter control sequences out of 15000+600000
+ 8768 strings out of 473190
+ 197614 string characters out of 5715801
+ 577360 words of memory out of 5000000
+ 31933 multiletter control sequences out of 15000+600000
  607911 words of font info for 129 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  73i,13n,80p,1337b,698s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
-></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><
-/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></u
-sr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
-/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/lo
-cal/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local
-/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/te
-xlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texli
-ve/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
-e/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/
-2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/20
-25/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-d
-ist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2025/texmf-dist/fonts
-/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw
-/times/utmri8a.pfb>
-Output written on main.pdf (4 pages, 272120 bytes).
+></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><
+/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></u
+sr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr
+/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/l
+ocal/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/loca
+l/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/t
+exlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texl
+ive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive
+/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/
+2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/20
+25/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/t
+exmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/
+fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/typ
+e1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/tim
+es/utmri8a.pfb>
+Output written on main.pdf (4 pages, 292479 bytes).
 PDF statistics:
- 352 PDF objects out of 1000 (max. 8388607)
- 106 compressed objects within 2 object streams
+ 362 PDF objects out of 1000 (max. 8388607)
+ 112 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
