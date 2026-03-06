@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2026.2.5)  6 MAR 2026 17:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2026.2.5)  6 MAR 2026 17:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -396,20 +396,20 @@ nslations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
 or `english'. on input line 12.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 26.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 28.
 
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 26.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 28.
 
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 2
-6.
+8.
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
@@ -426,13 +426,13 @@ ocal/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc}
 File: figures/fig1_stations_availability.pdf Graphic file (type pdf)
 <use figures/fig1_stations_availability.pdf>
 Package pdftex.def Info: figures/fig1_stations_availability.pdf  used on input 
-line 91.
+line 93.
 (pdftex.def)             Requested size: 252.0pt x 102.90819pt.
 <figures/fig2_noise_analysis.pdf, id=17, 514.73744pt x 177.95421pt>
 File: figures/fig2_noise_analysis.pdf Graphic file (type pdf)
 <use figures/fig2_noise_analysis.pdf>
 Package pdftex.def Info: figures/fig2_noise_analysis.pdf  used on input line 10
-0.
+2.
 (pdftex.def)             Requested size: 252.0pt x 87.11957pt.
 
 
@@ -440,13 +440,13 @@ Package pdftex.def Info: figures/fig2_noise_analysis.pdf  used on input line 10
 File: figures/fig3_drift_analysis.pdf Graphic file (type pdf)
 <use figures/fig3_drift_analysis.pdf>
 Package pdftex.def Info: figures/fig3_drift_analysis.pdf  used on input line 13
-3.
+5.
 (pdftex.def)             Requested size: 252.0pt x 87.10857pt.
 <figures/fig4_cross_calibration.pdf, id=19, 514.72238pt x 177.95421pt>
 File: figures/fig4_cross_calibration.pdf Graphic file (type pdf)
 <use figures/fig4_cross_calibration.pdf>
 Package pdftex.def Info: figures/fig4_cross_calibration.pdf  used on input line
- 144.
+ 146.
 (pdftex.def)             Requested size: 252.0pt x 87.12228pt.
 
 
@@ -490,7 +490,7 @@ e/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/
 ist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2025/texmf-dist/fonts
 /type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw
 /times/utmri8a.pfb>
-Output written on main.pdf (4 pages, 271947 bytes).
+Output written on main.pdf (4 pages, 272120 bytes).
 PDF statistics:
  352 PDF objects out of 1000 (max. 8388607)
  106 compressed objects within 2 object streams
