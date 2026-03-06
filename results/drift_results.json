@@ -1,0 +1,62 @@
+{
+  "pm25Value": {
+    "n_stations_analyzed": 349,
+    "n_significant_drift": 118,
+    "pct_significant": 33.810888252149,
+    "drift_rate_median": 0.05339528244575008,
+    "drift_rate_mean": 0.004378991556152126,
+    "drift_rate_std": 0.9259057790986047,
+    "sig_drift_rate_median": -0.4266185357522084,
+    "sig_drift_rate_abs_median": 1.008265908519713
+  },
+  "pm10Value": {
+    "n_stations_analyzed": 348,
+    "n_significant_drift": 88,
+    "pct_significant": 25.287356321839084,
+    "drift_rate_median": 0.0,
+    "drift_rate_mean": 0.00776371432625585,
+    "drift_rate_std": 1.2970152135985193,
+    "sig_drift_rate_median": -0.5107510956538368,
+    "sig_drift_rate_abs_median": 1.480707371922572
+  },
+  "so2Value": {
+    "n_stations_analyzed": 346,
+    "n_significant_drift": 212,
+    "pct_significant": 61.27167630057804,
+    "drift_rate_median": -5.386951212771404e-06,
+    "drift_rate_mean": 4.522408845422069e-06,
+    "drift_rate_std": 0.0002399265601820626,
+    "sig_drift_rate_median": -6.016120188985596e-05,
+    "sig_drift_rate_abs_median": 0.0001612412008570124
+  },
+  "no2Value": {
+    "n_stations_analyzed": 347,
+    "n_significant_drift": 163,
+    "pct_significant": 46.97406340057637,
+    "drift_rate_median": 0.0,
+    "drift_rate_mean": -3.709345353167448e-06,
+    "drift_rate_std": 0.0008816228940611324,
+    "sig_drift_rate_median": -0.000498992920395829,
+    "sig_drift_rate_abs_median": 0.0008350612265466306
+  },
+  "coValue": {
+    "n_stations_analyzed": 345,
+    "n_significant_drift": 189,
+    "pct_significant": 54.78260869565217,
+    "drift_rate_median": 0.001058281136881183,
+    "drift_rate_mean": 0.00043871017607071967,
+    "drift_rate_std": 0.033341790076152254,
+    "sig_drift_rate_median": 0.009632538734880444,
+    "sig_drift_rate_abs_median": 0.027478808450073076
+  },
+  "o3Value": {
+    "n_stations_analyzed": 346,
+    "n_significant_drift": 155,
+    "pct_significant": 44.797687861271676,
+    "drift_rate_median": 3.842895114463622e-05,
+    "drift_rate_mean": 3.501729229325857e-06,
+    "drift_rate_std": 0.001190229997128192,
+    "sig_drift_rate_median": 0.0007109638299970534,
+    "sig_drift_rate_abs_median": 0.0012889132547826687
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "pm25Value": {
+    "missing_pct_median": 1.760074108383511,
+    "missing_pct_mean": 3.2185615940230257,
+    "missing_pct_q95": 9.283674073661523,
+    "stations_over_50pct_missing": 1,
+    "flagged_pct_mean": 3.2185615940230257
+  },
+  "pm10Value": {
+    "missing_pct_median": 1.3895321908290876,
+    "missing_pct_mean": 2.8700675900834938,
+    "missing_pct_q95": 6.787864752200093,
+    "stations_over_50pct_missing": 2,
+    "flagged_pct_mean": 2.8700675900834938
+  },
+  "so2Value": {
+    "missing_pct_median": 1.2505789717461788,
+    "missing_pct_mean": 3.1187785501716636,
+    "missing_pct_q95": 5.279697361962767,
+    "stations_over_50pct_missing": 4,
+    "flagged_pct_mean": 3.1187785501716636
+  },
+  "no2Value": {
+    "missing_pct_median": 1.145398110751392,
+    "missing_pct_mean": 2.7382848387100847,
+    "missing_pct_q95": 4.9583140342751335,
+    "stations_over_50pct_missing": 3,
+    "flagged_pct_mean": 2.7382848387100847
+  },
+  "coValue": {
+    "missing_pct_median": 1.2505789717461788,
+    "missing_pct_mean": 3.344702454681824,
+    "missing_pct_q95": 6.005071319866531,
+    "stations_over_50pct_missing": 5,
+    "flagged_pct_mean": 3.3449701666102434
+  },
+  "o3Value": {
+    "missing_pct_median": 1.1611794778974636,
+    "missing_pct_mean": 3.0276864080154966,
+    "missing_pct_q95": 5.258854379100331,
+    "stations_over_50pct_missing": 4,
+    "flagged_pct_mean": 3.0276864080154966
+  },
+  "availability_by_type": {
+    "pm25Value": {
+      "\uad50\uc678\ub300\uae30": 93.34348626181864,
+      "\uad6d\uac00\ubc30\uacbd\ub18d\ub3c4(\ub3c4\uc11c)": 94.47427445116564,
+      "\ub3c4\ub85c\ubcc0\ub300\uae30": 97.42257143863853,
+      "\ub3c4\uc2dc\ub300\uae30": 97.35424329279058,
+      "\ud56d\ub9cc": 94.2547520868953
+    },
+    "pm10Value": {
+      "\uad50\uc678\ub300\uae30": 94.48886350656768,
+      "\uad6d\uac00\ubc30\uacbd\ub18d\ub3c4(\ub3c4\uc11c)": 84.44232991232244,
+      "\ub3c4\ub85c\ubcc0\ub300\uae30": 96.86233747929953,
+      "\ub3c4\uc2dc\ub300\uae30": 98.02616055060253,
+      "\ud56d\ub9cc": 94.53384290455597
+    },
+    "so2Value": {
+      "\uad50\uc678\ub300\uae30": 93.93045243987562,
+      "\uad6d\uac00\ubc30\uacbd\ub18d\ub3c4(\ub3c4\uc11c)": 71.39944266974784,
+      "\ub3c4\ub85c\ubcc0\ub300\uae30": 97.74849371058102,
+      "\ub3c4\uc2dc\ub300\uae30": 98.01708504736588,
+      "\ud56d\ub9cc": 94.46847028059942
+    },
+    "no2Value": {
+      "\uad50\uc678\ub300\uae30": 94.09226473761025,
+      "\uad6d\uac00\ubc30\uacbd\ub18d\ub3c4(\ub3c4\uc11c)": 71.02562359817848,
+      "\ub3c4\ub85c\ubcc0\ub300\uae30": 97.78020506677002,
+      "\ub3c4\uc2dc\ub300\uae30": 98.47168525494739,
+      "\ud56d\ub9cc": 94.71487478628181
+    },
+    "coValue": {
+      "\uad50\uc678\ub300\uae30": 93.99073545275715,
+      "\uad6d\uac00\ubc30\uacbd\ub18d\ub3c4(\ub3c4\uc11c)": 71.40623938014001,
+      "\ub3c4\ub85c\ubcc0\ub300\uae30": 97.72382932243401,
+      "\ub3c4\uc2dc\ub300\uae30": 97.71577833990894,
+      "\ud56d\ub9cc": 94.77019008347581
+    },
+    "o3Value": {
+      "\uad50\uc678\ub300\uae30": 94.13668379973349,
+      "\uad6d\uac00\ubc30\uacbd\ub18d\ub3c4(\ub3c4\uc11c)": 71.41303609053217,
+      "\ub3c4\ub85c\ubcc0\ub300\uae30": 94.23558014164406,
+      "\ub3c4\uc2dc\ub300\uae30": 98.44577881843549,
+      "\ud56d\ub9cc": 94.79030473700091
+    }
+  },
+  "availability_matrix_shape": [
+    350,
+    91
+  ]
+}

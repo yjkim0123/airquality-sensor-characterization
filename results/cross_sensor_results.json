@@ -1,0 +1,9 @@
+{
+  "pm_ratio_overall_mean": 0.5849460496791382,
+  "pm_ratio_overall_std": 0.24895947076488337,
+  "station_ratio_mean": 0.5847196070788752,
+  "station_ratio_cv_median": 0.3632494836405213,
+  "ratio_temporal_stability_median": 0.07001897144488668,
+  "n_stations": 348,
+  "anomalous_ratio_stations": 0
+}

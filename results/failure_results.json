@@ -1,0 +1,63 @@
+{
+  "pm25Value": {
+    "total_stations": 350,
+    "stations_with_gap_24h": 127,
+    "stations_with_gap_72h": 23,
+    "stations_with_gap_168h": 8,
+    "pct_24h": 36.285714285714285,
+    "pct_72h": 6.571428571428571,
+    "pct_168h": 2.2857142857142856,
+    "total_gap_events_24h": 172,
+    "total_gap_events_72h": 24,
+    "total_gap_events_168h": 8
+  },
+  "pm10Value": {
+    "total_stations": 350,
+    "stations_with_gap_24h": 117,
+    "stations_with_gap_72h": 18,
+    "stations_with_gap_168h": 10,
+    "pct_24h": 33.42857142857143,
+    "pct_72h": 5.142857142857142,
+    "pct_168h": 2.857142857142857,
+    "total_gap_events_24h": 153,
+    "total_gap_events_72h": 18,
+    "total_gap_events_168h": 10
+  },
+  "mtbf_by_type": {
+    "\ub3c4\uc2dc\ub300\uae30": {
+      "n_stations": 282,
+      "total_hours": 606027,
+      "n_failures": 131,
+      "mtbf_hours": 4626.160305343511,
+      "mtbf_days": 192.75667938931295
+    },
+    "\uad50\uc678\ub300\uae30": {
+      "n_stations": 15,
+      "total_hours": 31518,
+      "n_failures": 20,
+      "mtbf_hours": 1575.9,
+      "mtbf_days": 65.66250000000001
+    },
+    "\uad6d\uac00\ubc30\uacbd\ub18d\ub3c4(\ub3c4\uc11c)": {
+      "n_stations": 7,
+      "total_hours": 14713,
+      "n_failures": 5,
+      "mtbf_hours": 2942.6,
+      "mtbf_days": 122.60833333333333
+    },
+    "\ud56d\ub9cc": {
+      "n_stations": 19,
+      "total_hours": 39772,
+      "n_failures": 10,
+      "mtbf_hours": 3977.2,
+      "mtbf_days": 165.71666666666667
+    },
+    "\ub3c4\ub85c\ubcc0\ub300\uae30": {
+      "n_stations": 27,
+      "total_hours": 56762,
+      "n_failures": 6,
+      "mtbf_hours": 9460.333333333334,
+      "mtbf_days": 394.1805555555556
+    }
+  }
+}

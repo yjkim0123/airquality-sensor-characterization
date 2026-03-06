@@ -1,0 +1,186 @@
+\documentclass[journal,twoside]{IEEEtran}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage{siunitx}
+
+\begin{document}
+
+\title{Characterizing Sensor Drift and Cross-Calibration in Korea's National Air Quality Monitoring Network}
+
+\author{Yongjun~Kim,~\IEEEmembership{}%
+\thanks{Y. Kim is with the Department of Software, Ajou University, Suwon 16499, South Korea (e-mail: yjkim0123@ajou.ac.kr). ORCID: 0000-0003-4234-4883.}%
+}
+
+\markboth{IEEE Sensors Letters}%
+{Kim: Characterizing Sensor Drift and Cross-Calibration in Korea's Air Quality Network}
+
+\maketitle
+
+\begin{abstract}
+We present a comprehensive empirical characterization of sensor performance across 350~stations in Korea's national air quality monitoring network (AirKorea), analyzing 748{,}792 hourly measurements of six pollutants over a three-month period (December 2025--March 2026). Our analysis reveals significant sensor drift in 33.8\% of PM\textsubscript{2.5} stations and up to 61.3\% of SO\textsubscript{2} stations (linear trend $p < 0.05$), with drift rates varying substantially across pollutant types. Spatial cross-calibration of 279~adjacent station pairs (${<}5$~km) yields a median Pearson correlation of 0.936 for PM\textsubscript{2.5}, but 23.7\% of pairs exhibit systematic biases exceeding \SI{5}{\micro\gram/\meter\cubed}. We also document pronounced heteroscedastic noise characteristics: daily coefficient of variation (CV) ranges from 0.115 (SO\textsubscript{2}) to 0.365 (NO\textsubscript{2}/O\textsubscript{3}), with CV inversely related to concentration level. Station failure analysis reveals 36.3\% of stations experienced data gaps exceeding 24~hours, with mean time between failures of 192.8~days for urban stations. These findings provide actionable benchmarks for calibration scheduling, quality control, and sensor network design.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Air quality monitoring, sensor drift, cross-calibration, PM\textsubscript{2.5}, network characterization
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+\IEEEPARstart{A}{ir} quality monitoring networks are critical infrastructure for public health protection and environmental policy. Korea operates one of the world's densest national monitoring networks through AirKorea, comprising over 670~stations that continuously measure six criteria pollutants: PM\textsubscript{2.5}, PM\textsubscript{10}, SO\textsubscript{2}, NO\textsubscript{2}, CO, and O\textsubscript{3}~\cite{kim2020airkorea}. While these stations employ reference-grade analyzers (beta attenuation monitors for PM, UV fluorescence for SO\textsubscript{2}, chemiluminescence for NO\textsubscript{2}), systematic characterization of their in-field performance---including drift, noise, and inter-station consistency---remains limited.
+
+Prior studies have examined sensor performance in controlled laboratory settings~\cite{malings2019fine} or focused on low-cost sensor calibration~\cite{zimmerman2018machine, barkjohn2021development}. However, reference-grade instruments deployed in national networks also exhibit drift, calibration offsets, and failure modes that can compromise data quality~\cite{munir2019analysing}. Understanding these characteristics at network scale is essential for: (1)~optimizing calibration schedules, (2)~detecting malfunctioning stations, and (3)~establishing uncertainty bounds for epidemiological and regulatory applications.
+
+In this letter, we present the first large-scale empirical analysis of sensor performance in Korea's AirKorea network, leveraging 748{,}792~hourly observations from 350~stations across five station types. We quantify noise characteristics, detect systematic drift, evaluate spatial consistency through cross-calibration, and characterize station reliability.
+
+\section{Data and Methods}
+
+\subsection{Data Collection}
+
+We collected three months (December 2025--March 2026) of hourly air quality measurements from the AirKorea open API for 350~stations, spanning five categories: urban (282), roadside (27), port (19), suburban (15), and national background/island (7). The dataset comprises 748{,}792~records with six pollutants measured per record.
+
+\subsection{Noise Characterization}
+
+For each station and pollutant, we computed the daily coefficient of variation (CV) as the ratio of standard deviation to mean of hourly readings within each day, requiring ${\geq}12$~valid hours. Station-level noise was summarized as the median daily CV across the observation period. To assess heteroscedasticity, we binned measurements into deciles by concentration level and computed the CV within each bin.
+
+\subsection{Drift Detection}
+
+Sensor drift was quantified by computing each station's daily mean deviation from its regional average (stations sharing the same province and category). A linear regression of this deviation against time yields the drift rate (units per month). Drift was deemed significant at $p < 0.05$, with at least 30~days of data required.
+
+\subsection{Cross-Calibration}
+
+We identified 279~station pairs within 5~km using Haversine distance from station coordinates. For each pair, we computed the Pearson correlation coefficient, mean bias, and root mean square error (RMSE) of hourly PM\textsubscript{2.5} concentrations over concurrent valid observations (${\geq}100$~hours required). Seven national background stations on remote islands served as reference standards; we compared their readings with nearby urban stations within 100~km.
+
+\subsection{Reliability Analysis}
+
+Station failures were defined as continuous data gaps ${\geq}24$~hours. Mean time between failures (MTBF) was calculated per station type as total operational hours divided by failure count.
+
+\section{Results}
+
+\subsection{Noise Characteristics}
+
+Table~\ref{tab:noise} summarizes the noise properties across pollutants. Daily CV varies by an order of magnitude: SO\textsubscript{2} exhibits the lowest noise (median CV = 0.115), while NO\textsubscript{2} and O\textsubscript{3} show the highest variability (CV $\approx$ 0.365). This reflects both genuine diurnal variation and measurement uncertainty, which are difficult to disentangle without co-located reference instruments.
+
+\begin{table}[!t]
+\centering
+\caption{Daily Coefficient of Variation by Pollutant}
+\label{tab:noise}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Pollutant} & \textbf{Median CV} & \textbf{IQR} & \textbf{$N$} \\
+\midrule
+PM\textsubscript{2.5} & 0.344 & [0.304, 0.408] & 349 \\
+PM\textsubscript{10}  & 0.295 & [0.263, 0.332] & 348 \\
+SO\textsubscript{2}   & 0.115 & [0.088, 0.151] & 346 \\
+NO\textsubscript{2}   & 0.365 & [0.321, 0.400] & 347 \\
+CO                     & 0.162 & [0.135, 0.187] & 345 \\
+O\textsubscript{3}    & 0.365 & [0.257, 0.434] & 346 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig1_stations_availability.pdf}
+\caption{(a)~Spatial distribution of 350 AirKorea stations by type. (b)~Hourly data availability for 50 representative stations over the study period.}
+\label{fig:stations}
+\end{figure}
+
+All six pollutants exhibit pronounced heteroscedasticity (Fig.~\ref{fig:noise}b). For PM\textsubscript{2.5}, the CV decreases from 0.379 at low concentrations (${\sim}4$~\si{\micro\gram/\meter\cubed}) to 0.035 at moderate levels (${\sim}14$~\si{\micro\gram/\meter\cubed}), then increases again to 0.258 at high levels (${\sim}57$~\si{\micro\gram/\meter\cubed}). This U-shaped relationship suggests that both detection-limit effects and source heterogeneity contribute to measurement uncertainty.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig2_noise_analysis.pdf}
+\caption{(a)~Distribution of daily CV across stations for each pollutant. (b)~Heteroscedasticity: CV as a function of concentration level for PM\textsubscript{2.5} and PM\textsubscript{10}.}
+\label{fig:noise}
+\end{figure}
+
+The PM\textsubscript{2.5}/PM\textsubscript{10} ratio across the network averaged 0.585 (station-level CV median = 0.363), consistent with East Asian winter conditions dominated by secondary aerosol and transboundary transport.
+
+\subsection{Sensor Drift}
+
+Table~\ref{tab:drift} presents the drift analysis results. The fraction of stations exhibiting statistically significant drift ($p < 0.05$) varies from 25.3\% (PM\textsubscript{10}) to 61.3\% (SO\textsubscript{2}). Gaseous pollutants (SO\textsubscript{2}, CO, O\textsubscript{3}) show higher drift prevalence than particulate matter, which is consistent with the known sensitivity of electrochemical and optical gas analyzers to environmental conditions and reagent degradation.
+
+\begin{table}[!t]
+\centering
+\caption{Drift Analysis Summary}
+\label{tab:drift}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Pollutant} & \textbf{\% Sig. Drift} & \textbf{Median Rate} & \textbf{$|$Rate$|$ Median} \\
+\midrule
+PM\textsubscript{2.5} & 33.8\% & $-$0.43 & 1.01 \si{\micro\gram/\meter\cubed}/mo \\
+PM\textsubscript{10}  & 25.3\% & $-$0.51 & 1.48 \si{\micro\gram/\meter\cubed}/mo \\
+SO\textsubscript{2}   & 61.3\% & $-$0.06$\times 10^{-3}$ & 0.16$\times 10^{-3}$ ppm/mo \\
+NO\textsubscript{2}   & 47.0\% & $-$0.50$\times 10^{-3}$ & 0.84$\times 10^{-3}$ ppm/mo \\
+CO                     & 54.8\% & 9.6$\times 10^{-3}$ & 27.5$\times 10^{-3}$ ppm/mo \\
+O\textsubscript{3}    & 44.8\% & 0.71$\times 10^{-3}$ & 1.29$\times 10^{-3}$ ppm/mo \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For PM\textsubscript{2.5}, the median drift rate among significantly drifting stations is $-0.43$~\si{\micro\gram/\meter\cubed}/month, suggesting a systematic negative bias that accumulates over time. Fig.~\ref{fig:drift}a illustrates a representative drifting station where the 7-day rolling deviation from the regional mean shows a clear downward trend.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig3_drift_analysis.pdf}
+\caption{(a)~Drift example: 7-day rolling deviation from regional mean for a representative PM\textsubscript{2.5} station. (b)~Distribution of significant drift rates for PM\textsubscript{2.5}, PM\textsubscript{10}, and SO\textsubscript{2}.}
+\label{fig:drift}
+\end{figure}
+
+\subsection{Spatial Cross-Calibration}
+
+Among 279~co-located station pairs within 5~km, the median PM\textsubscript{2.5} Pearson correlation is 0.936 (Fig.~\ref{fig:crosscal}), indicating strong spatial coherence.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig4_cross_calibration.pdf}
+\caption{(a)~Scatter plot of PM\textsubscript{2.5} readings for the highest-correlation adjacent station pair. (b)~Spatial correlation decay: PM\textsubscript{2.5} correlation vs.\ inter-station distance for 279 pairs within 5~km.}
+\label{fig:crosscal}
+\end{figure} However, the median RMSE of 6.94~\si{\micro\gram/\meter\cubed} and the finding that 23.7\% of pairs exhibit systematic biases ${>}5$~\si{\micro\gram/\meter\cubed} reveal non-trivial inter-station discrepancies.
+
+Reference-based calibration using seven island background stations showed weaker correlations with urban stations (median $r = 0.682$), attributable to genuine spatial concentration gradients. The median urban-minus-reference bias of 1.50~\si{\micro\gram/\meter\cubed} quantifies the expected urban enhancement for PM\textsubscript{2.5} in winter.
+
+Temporal stability analysis of the 50 highest-correlation pairs found that 26.0\% exhibit statistically significant trends in their inter-station bias ($p < 0.05$), with a median weekly bias standard deviation of 1.51~\si{\micro\gram/\meter\cubed}. This indicates that even well-correlated adjacent stations develop diverging calibration states over a three-month period.
+
+\subsection{Station Reliability}
+
+Overall data availability is high (97.4\% for urban PM\textsubscript{2.5}), but episodic failures are common: 36.3\% of stations experienced at least one gap exceeding 24~hours for PM\textsubscript{2.5}, while 6.6\% had gaps exceeding 72~hours. The MTBF varies substantially by station type: roadside stations are most reliable (394.2~days), followed by urban (192.8~days) and port (165.7~days), while suburban stations show the shortest MTBF (65.7~days). Background island stations, despite their remoteness, achieve an MTBF of 122.6~days with only 5~failure events across 7~stations.
+
+\section{Discussion}
+
+Our findings have several practical implications. First, the high prevalence of significant drift (33.8--61.3\% depending on pollutant) over just three months argues for monthly or bimonthly calibration verification, particularly for gaseous analyzers. Second, the 23.7\% of co-located pairs with biases exceeding 5~\si{\micro\gram/\meter\cubed} suggests that spatial averaging or data fusion approaches should account for station-specific offsets. Third, the heteroscedastic noise structure implies that uncertainty quantification should be concentration-dependent rather than assuming constant measurement error.
+
+The negative drift bias observed in PM\textsubscript{2.5} stations ($-0.43$~\si{\micro\gram/\meter\cubed}/month) could lead to systematic underestimation of exposure in epidemiological studies if uncorrected, corresponding to a potential $-1.3$~\si{\micro\gram/\meter\cubed} bias after one quarter. While this is small relative to Korea's PM\textsubscript{2.5} annual standard of 15~\si{\micro\gram/\meter\cubed}, it is non-negligible for regulatory compliance monitoring.
+
+Limitations include: (1)~the three-month window may conflate seasonal trends with instrument drift, (2)~our drift detection method assumes the regional mean is stable, and (3)~the 350-station subset may not fully represent all 672 network stations. Future work could extend the analysis period and incorporate maintenance records to validate drift detections.
+
+\section{Conclusion}
+
+This letter provides the first network-scale characterization of sensor performance in Korea's AirKorea system, revealing widespread but heterogeneous drift, concentration-dependent noise, and non-trivial inter-station biases. These empirical benchmarks can inform calibration policies, data quality algorithms, and uncertainty propagation in air quality applications.
+
+\begin{thebibliography}{9}
+
+\bibitem{kim2020airkorea}
+H. Kim, H.-J. Kim, and Y.-H. Kim, ``Review and evaluation of the national ambient air quality monitoring system in Korea,'' \textit{J. Korean Soc. Atmos. Environ.}, vol.~36, no.~1, pp.~1--14, 2020.
+
+\bibitem{malings2019fine}
+C. Malings \textit{et al.}, ``Fine particle mass monitoring with low-cost sensors: Corrections and long-term performance evaluation,'' \textit{Aerosol Sci. Technol.}, vol.~54, no.~2, pp.~160--174, 2019.
+
+\bibitem{zimmerman2018machine}
+N. Zimmerman \textit{et al.}, ``A machine learning calibration model using random forests to improve sensor performance for lower-cost air quality monitoring,'' \textit{Atmos. Meas. Tech.}, vol.~11, no.~1, pp.~291--313, 2018.
+
+\bibitem{barkjohn2021development}
+K.~K. Barkjohn, B. Gantt, and A.~L. Clements, ``Development and application of a United States-wide correction for PM\textsubscript{2.5} data collected with the PurpleAir sensor,'' \textit{Atmos. Meas. Tech.}, vol.~14, no.~6, pp.~4617--4637, 2021.
+
+\bibitem{munir2019analysing}
+S. Munir, M. Mayfield, D. Coca, and S.~A. Jubb, ``Analysing the performance of low-cost air quality sensors, their drivers, relative benefits and calibration in cities---A case study in Sheffield,'' \textit{Environ. Monit. Assess.}, vol.~191, no.~94, 2019.
+
+\end{thebibliography}
+
+\end{document}

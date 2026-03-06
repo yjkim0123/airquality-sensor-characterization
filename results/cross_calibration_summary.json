@@ -1,0 +1,11 @@
+{
+  "n_pairs_analyzed": 279,
+  "pair_distance_threshold": "5km",
+  "median_correlation": 0.9358203323678955,
+  "median_abs_bias": 2.606166086524117,
+  "median_rmse": 6.942408590470388,
+  "pct_needing_calibration": 23.655913978494624,
+  "n_ref_pairs": 207,
+  "n_temporal_pairs": 50,
+  "pct_drifting_bias": 26.0
+}
