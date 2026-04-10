@@ -7,3 +7,18 @@ data/collection_errors.json
 *.bbl
 *.blg
 *.synctex.gz
+# LaTeX build artifacts
+*.fdb_latexmk
+*.fls
+*.xdv
+*.toc
+*.spl
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+*_backup.tex
+# macOS
+.DS_Store
+._*
