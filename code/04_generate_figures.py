@@ -109,30 +109,33 @@ ax1.set_xlim(124.5, 131.5)
 ax1.set_ylim(33, 39)
 ax1.set_aspect("equal")
 
-# (b) Data availability heatmap — sample 50 stations
-sample_stations = df.groupby("stationName")["pm25Value"].count().nlargest(50).index
-avail_subset = availability_matrix.loc[availability_matrix.index.isin(sample_stations)]
+# (b) Bar chart: mean % missing data by pollutant (from missing_results.json)
+import json
+with open(RESULTS_DIR / "missing_results.json") as _f:
+    missing_data = json.load(_f)
 
-# Sort by overall availability
-avail_subset = avail_subset.loc[avail_subset.mean(axis=1).sort_values(ascending=False).index]
+pollutant_keys = ["pm25Value", "pm10Value", "so2Value", "no2Value", "coValue", "o3Value"]
+poll_labels    = [r"PM$_{2.5}$", r"PM$_{10}$", r"SO$_2$", r"NO$_2$", "CO", r"O$_3$"]
+miss_pcts  = [missing_data[k]["missing_pct_mean"]       for k in pollutant_keys if k in missing_data]
+miss_n50   = [missing_data[k]["stations_over_50pct_missing"] for k in pollutant_keys if k in missing_data]
+miss_q95   = [missing_data[k]["missing_pct_q95"]        for k in pollutant_keys if k in missing_data]
+valid_labels = [poll_labels[i] for i, k in enumerate(pollutant_keys) if k in missing_data]
 
-im = ax2.imshow(avail_subset.values, aspect="auto", cmap="RdYlGn", vmin=0, vmax=100,
-                interpolation="nearest")
-ax2.set_ylabel("Station")
-ax2.set_xlabel("Day")
-ax2.set_title("(b) Hourly Data Availability (%)")
-ax2.set_yticks([])
+bar_colors = plt.cm.Set2(np.linspace(0, 1, len(valid_labels)))
+bars = ax2.bar(valid_labels, miss_pcts, color=bar_colors, edgecolor="white", linewidth=0.5)
 
-# Date labels on x-axis
-n_cols = avail_subset.shape[1]
-tick_positions = np.linspace(0, n_cols-1, 5, dtype=int)
-dates = avail_subset.columns.tolist()
-ax2.set_xticks(tick_positions)
-ax2.set_xticklabels([str(dates[i]) for i in tick_positions], rotation=30, ha="right", fontsize=5)
+# Add 95th-percentile error cap
+for bar, q95, n50 in zip(bars, miss_q95, miss_n50):
+    xc = bar.get_x() + bar.get_width() / 2
+    ax2.plot([xc - 0.15, xc + 0.15], [q95, q95], color="gray", linewidth=1.0)
+    ax2.text(xc, q95 + 0.1, f"n>{50}%: {n50}",
+             ha="center", va="bottom", fontsize=5.5, color="#374151")
 
-cb = plt.colorbar(im, ax=ax2, fraction=0.046, pad=0.04)
-cb.set_label("Availability (%)", fontsize=6)
-cb.ax.tick_params(labelsize=6)
+ax2.set_ylabel("Mean Missing Data (%)")
+ax2.set_title("(b) Data Missingness by Pollutant\n(cap = 95th pct; labels = stations >50% missing)")
+ax2.set_ylim(0, max(miss_q95) * 1.35)
+ax2.spines["top"].set_visible(False)
+ax2.spines["right"].set_visible(False)
 
 fig.tight_layout()
 fig.savefig(FIG_DIR / "fig1_stations_availability.pdf")
@@ -168,7 +171,7 @@ ax1.set_ylabel("Daily Coefficient of Variation")
 ax1.set_title("(a) Sensor Noise by Pollutant")
 ax1.set_ylim(0, 1.0)
 
-# (b) CV vs measurement level for PM2.5 and PM10
+# (b) CV vs measurement level for PM2.5 and PM10 — with std error bars
 for col, label, marker, color in [
     ("pm25Value", r"PM$_{2.5}$", "o", "#1f77b4"),
     ("pm10Value", r"PM$_{10}$", "s", "#ff7f0e"),
@@ -176,14 +179,19 @@ for col, label, marker, color in [
     if col in noise_results and "level_cv_data" in noise_results[col]:
         level_data = noise_results[col]["level_cv_data"]
         means = [v["mean"] for v in level_data.values()]
-        cvs = [v["cv"] for v in level_data.values()]
-        ax2.scatter(means, cvs, marker=marker, s=25, c=color, label=label, alpha=0.8)
+        cvs   = [v["cv"]   for v in level_data.values()]
+        stds  = [v.get("std", 0.0) for v in level_data.values()]
+        ax2.errorbar(means, cvs, yerr=stds, marker=marker, ms=5,
+                     color=color, label=label, alpha=0.85,
+                     linestyle="-", linewidth=0.8, capsize=3, capthick=0.8)
 
-ax2.set_xlabel(r"Measurement Level ($\mu$g/m³)")
+ax2.set_xlabel(r"Concentration Level ($\mu$g m$^{-3}$)")
 ax2.set_ylabel("Coefficient of Variation")
-ax2.set_title("(b) Heteroscedasticity")
+ax2.set_title("(b) Heteroscedasticity\n(error bars = ±1 SD across stations)")
 ax2.legend(fontsize=7)
-ax2.set_ylim(0, 1.5)
+ax2.set_ylim(0, None)
+ax2.spines["top"].set_visible(False)
+ax2.spines["right"].set_visible(False)
 
 fig.tight_layout()
 fig.savefig(FIG_DIR / "fig2_noise_analysis.pdf")
@@ -239,8 +247,8 @@ if len(x_num) > 10:
              label=f"Trend: {slope*30:.2f}/month")
     ax1.legend(fontsize=6)
 
-ax1.set_ylabel(r"Deviation from Regional Mean ($\mu$g/m³)")
-ax1.set_title(f"(a) Drift Example: {example_station}")
+ax1.set_ylabel(r"Deviation from Regional Mean ($\mu$g m$^{-3}$)")
+ax1.set_title("(a) Representative PM$_{2.5}$ Drift Example")
 ax1.tick_params(axis="x", rotation=30)
 # Format x-axis dates
 ax1.xaxis.set_major_locator(matplotlib.dates.MonthLocator())
@@ -256,9 +264,10 @@ for idx, (col, label) in enumerate(list(SENSORS.items())[:3]):
         color = plt.cm.Set1(idx / 6)
         ax2.hist(sig_rates, bins=30, alpha=0.5, color=color, label=label, density=True)
 
-ax2.set_xlabel("Drift Rate (unit/month)")
+ax2.set_xlabel(r"Drift Rate (normalised, $\sigma$/month)")
 ax2.set_ylabel("Density")
-ax2.set_title("(b) Significant Drift Rate Distribution")
+ax2.set_title("(b) Significant Drift Rate Distribution\n"
+              r"(PM$_{2.5}$/$_{10}$: $\mu$g m$^{-3}$/mo; SO$_2$: $\times10^{-3}$ ppm/mo)")
 ax2.legend(fontsize=6)
 ax2.axvline(x=0, color="gray", linestyle="--", linewidth=0.5)
 
@@ -296,9 +305,11 @@ if spatial_pairs:
         ax1.plot(x_range, intercept + slope * x_range, "k-", linewidth=0.8,
                  label=f"r={r:.3f}, d={best['distance_km']:.1f}km")
         
-        ax1.set_xlabel(f"{s1} " + r"PM$_{2.5}$ ($\mu$g/m³)")
-        ax1.set_ylabel(f"{s2} " + r"PM$_{2.5}$ ($\mu$g/m³)")
-        ax1.set_title(f"(a) Adjacent Station Correlation")
+        ax1.set_xlabel(r"Station A PM$_{2.5}$ ($\mu$g m$^{-3}$)")
+        ax1.set_ylabel(r"Station B PM$_{2.5}$ ($\mu$g m$^{-3}$)")
+        ax1.set_title(f"(a) Adjacent Station Correlation\n"
+                      f"(distance = {best['distance_km']:.1f} km, "
+                      f"r = {best['correlation']:.3f})")
         ax1.legend(fontsize=6, loc="upper left")
         ax1.set_xlim(0, None)
         ax1.set_ylim(0, None)
@@ -316,11 +327,11 @@ if spatial_pairs:
     bin_centers = [(b.left + b.right) / 2 for b in binned.index]
     ax2.plot(bin_centers, binned["mean"], "ro-", markersize=4, linewidth=1.2, label="Binned mean")
     
-    ax2.set_xlabel("Distance (km)")
+    ax2.set_xlabel("Inter-station Distance (km)")
     ax2.set_ylabel(r"PM$_{2.5}$ Pearson Correlation")
-    ax2.set_title("(b) Spatial Correlation Decay")
+    ax2.set_title("(b) Spatial Correlation Decay\n(279 pairs within 5 km)")
     ax2.legend(fontsize=6)
-    ax2.set_ylim(0.7, 1.0)
+    ax2.set_ylim(max(0.0, cal_df["correlation"].min() - 0.05), 1.0)
 
 fig.tight_layout()
 fig.savefig(FIG_DIR / "fig4_cross_calibration.pdf")
